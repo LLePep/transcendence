@@ -1,0 +1,127 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Online presence and activity status of a user
+enum UserStatus {
+  OFFLINE
+  ONLINE
+  IN_LOBBY
+  IN_GAME
+}
+
+// Status of a friend request between two users
+enum FriendshipStatus {
+  PENDING
+  ACCEPTED
+  DECLINED
+  BLOCKED
+}
+
+// Outcome of a match for a given participant
+enum MatchResult {
+  WIN
+  LOSS
+  DRAW
+}
+
+// Core user account and profile
+model User {
+  id           String     @id @default(uuid())
+  email        String     @unique
+  username     String     @unique
+  passwordHash String
+  avatarUrl    String     @default("/uploads/default-avatar.svg")
+  bio          String?    @default("Ready to play!")
+  status       UserStatus @default(OFFLINE)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  // Relations
+  stats               UserStats?
+  sentFriendships     Friendship[]       @relation("SentFriendships")
+  receivedFriendships Friendship[]       @relation("ReceivedFriendships")
+  matchParticipations MatchParticipant[]
+  wonMatches          Match[]            @relation("WonMatches")
+  achievements        UserAchievement[]
+}
+
+// Social relationship between two users
+model Friendship {
+  id          String           @id @default(uuid())
+  requesterId String
+  addresseeId String
+  status      FriendshipStatus @default(PENDING)
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+
+  requester   User @relation("SentFriendships", fields: [requesterId], references: [id], onDelete: Cascade)
+  addressee   User @relation("ReceivedFriendships", fields: [addresseeId], references: [id], onDelete: Cascade)
+
+  @@unique([requesterId, addresseeId])
+}
+
+// Aggregated career statistics and progression (for profile & leaderboard)
+model UserStats {
+  id           String   @id @default(uuid())
+  userId       String   @unique
+  gamesPlayed  Int      @default(0)
+  wins         Int      @default(0)
+  losses       Int      @default(0)
+  draws        Int      @default(0)
+  kills        Int      @default(0)
+  deaths       Int      @default(0)
+  highestScore Int      @default(0)
+  xp           Int      @default(0)
+  level        Int      @default(1)
+  rating       Int      @default(1000) // ELO / ranking points
+  updatedAt    DateTime @updatedAt
+
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// Completed game match (works for both 1v1 and N-player arena matches)
+model Match {
+  id              String             @id @default(uuid())
+  gameMode        String             @default("ARENA")
+  winnerId        String?
+  isDraw          Boolean            @default(false)
+  durationSeconds Int                @default(0)
+  playedAt        DateTime           @default(now())
+
+  winner          User?              @relation("WonMatches", fields: [winnerId], references: [id], onDelete: SetNull)
+  participants    MatchParticipant[]
+}
+
+// Individual player result inside a match
+model MatchParticipant {
+  id        String      @id @default(uuid())
+  matchId   String
+  userId    String
+  placement Int         // 1 = 1st place, 2 = 2nd place, etc.
+  result    MatchResult
+  kills     Int         @default(0)
+  score     Int         @default(0)
+
+  match     Match       @relation(fields: [matchId], references: [id], onDelete: Cascade)
+  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([matchId, userId])
+}
+
+// Unlocked player achievements (e.g. "FIRST_WIN", "TEN_GAMES")
+model UserAchievement {
+  id         String   @id @default(uuid())
+  userId     String
+  code       String
+  unlockedAt DateTime @default(now())
+
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, code])
+}

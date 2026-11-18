@@ -1,0 +1,30 @@
+# Environment variables (contain passwords and secret keys)
+.env
+.env.local
+.env.*.local
+
+# Dependencies installed by npm (heavy and regenerated via package.json)
+node_modules/
+
+# Compiled output (TypeScript -> JavaScript, Vite build)
+dist/
+build/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Locally generated SSL certificates
+*.crt
+*.key
+*.pem
+
+# User-uploaded files (keep only the default avatar)
+backend/uploads/*
+!backend/uploads/default-avatar.svg
+
+# OS and IDE files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
