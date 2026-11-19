@@ -1,6 +1,9 @@
 NAME = transcendence
 
-all: build up
+all: env build up
+
+env:
+	@if [ ! -f .env ]; then cp .env.example .env && echo "[Makefile] .env créé automatiquement à partir de .env.example"; fi
 
 build:
 	docker compose build
@@ -27,4 +30,4 @@ fclean:
 
 re: fclean all
 
-.PHONY: all build up down logs ps restart clean fclean re
+.PHONY: all env build up down logs ps restart clean fclean re
