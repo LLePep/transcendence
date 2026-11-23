@@ -1,17 +1,9 @@
-import './App.css'
+import type { FC } from 'react';
+import { RouterProvider } from 'react-router-dom';
+import { router } from './router';
 
-function App() {
+const App: FC = () => {
+  return <RouterProvider router={router} />;
+};
 
-  return (
-    <>
-      <section id="center">
-        <div className="hero">
-        </div>
-        <div>
-        </div>
-      </section>
-    </>
-  )
-}
-
-export default App
+export default App;

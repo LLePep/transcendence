@@ -1,0 +1,149 @@
+{
+  "common": {
+    "playNow": "Jouer maintenant",
+    "loading": "Chargement...",
+    "error": "Une erreur est survenue",
+    "retry": "Réessayer",
+    "back": "Retour",
+    "close": "Fermer",
+    "viewAll": "Tout afficher",
+    "online": "En ligne",
+    "inGame": "En jeu",
+    "offline": "Hors ligne",
+    "elo": "ELO",
+    "rank": "Rang",
+    "points": "PTS",
+    "wins": "Victoires",
+    "losses": "Défaites",
+    "winRate": "Taux de victoire",
+    "status": "Statut",
+    "placeholderBadge": "Module en cours de développement",
+    "backHome": "Retour à l'accueil",
+    "vs": "VS",
+    "milliseconds": "ms"
+  },
+  "nav": {
+    "brand": "TRANSCENDENCE",
+    "brandSub": "Arcade Pong",
+    "home": "Accueil",
+    "play": "Jouer",
+    "leaderboard": "Classement",
+    "chat": "Chat",
+    "profile": "Profil",
+    "login": "Connexion",
+    "register": "Inscription",
+    "toggleMenu": "Menu de navigation",
+    "languageSelector": "Choisir la langue"
+  },
+  "home": {
+    "hero": {
+      "badge": "Saison 1 — Tournois en direct",
+      "titlePrefix": "LE CLASSIQUE DU PONG",
+      "titleHighlight": "RÉINVENTÉ",
+      "titleSuffix": "EN TEMPS RÉEL",
+      "slogan": "Affrontez des joueurs du monde entier, défiez des intelligences artificielles redoutables et hissez-vous au sommet du classement mondial !",
+      "playButton": "Lancer une partie",
+      "leaderboardButton": "Voir le classement",
+      "statsActivePlayers": "Joueurs en ligne",
+      "statsMatchesPlayed": "Parties disputées",
+      "statsServerLatency": "Latence serveur"
+    },
+    "gameModes": {
+      "sectionTitle": "Modes de jeu",
+      "sectionSubtitle": "Choisissez votre arène et préparez-vous au duel",
+      "online": {
+        "badge": "1v1 Compétitif",
+        "title": "Multijoueur en ligne",
+        "description": "Affrontez des adversaires en temps réel grâce au matchmaking instantané et faites évoluer votre classement ELO.",
+        "action": "Trouver un match"
+      },
+      "ai": {
+        "badge": "Entraînement Solo",
+        "title": "Contre l'IA",
+        "description": "Perfectionnez vos réflexes face à un bot adaptatif doté de plusieurs niveaux de difficulté.",
+        "action": "Défier l'IA"
+      },
+      "join": {
+        "badge": "Salon Privé",
+        "title": "Rejoindre une partie",
+        "description": "Créez ou rejoignez une salle personnalisée avec un code unique pour défier vos amis ou lancer un tournoi.",
+        "action": "Entrer le code"
+      }
+    },
+    "social": {
+      "leaderboardTitle": "Top Joueurs de la semaine",
+      "leaderboardSubtitle": "Les maîtres actuels de la raquette",
+      "viewFullLeaderboard": "Classement complet",
+      "onlineFriendsTitle": "Joueurs connectés",
+      "onlineFriendsSubtitle": "Prêts pour un duel instantané",
+      "challengeFriend": "Défier",
+      "emptyFriends": "Aucun joueur en attente pour le moment."
+    }
+  },
+  "footer": {
+    "description": "Plateforme web de jeu Pong multijoueur en temps réel développée pour le cursus 42.",
+    "legalSection": "Informations légales",
+    "privacy": "Politique de confidentialité",
+    "terms": "Conditions d'utilisation",
+    "github": "Code source",
+    "githubLink": "GitHub",
+    "projectBadge": "Projet 42",
+    "allRightsReserved": "Tous droits réservés.",
+    "builtWith": "Développé avec React, TypeScript et Tailwind CSS.",
+    "systemStatus": "Tous les systèmes sont opérationnels"
+  },
+  "languages": {
+    "fr": "Français",
+    "en": "Anglais",
+    "ar": "Arabe"
+  },
+  "placeholders": {
+    "play": {
+      "title": "Arène de Jeu",
+      "description": "Le moteur de jeu temps réel est en cours d'initialisation. Préparez-vous à entrer sur le terrain !"
+    },
+    "leaderboard": {
+      "title": "Classement Général",
+      "description": "Tableau complet des scores, historique des saisons passées et statistiques détaillées des joueurs."
+    },
+    "chat": {
+      "title": "Messagerie & Canaux",
+      "description": "Échangez en direct avec vos adversaires, rejoignez des canaux publics ou créez des discussions privées."
+    },
+    "profile": {
+      "title": "Profil Joueur",
+      "description": "Consultez votre historique de matchs, personnalisez votre avatar et suivez votre ratio victoires/défaites."
+    },
+    "login": {
+      "title": "Connexion au compte",
+      "description": "Accédez à votre espace joueur pour retrouver vos statistiques, vos amis et participer aux tournois."
+    },
+    "register": {
+      "title": "Création de compte",
+      "description": "Inscrivez-vous dès maintenant pour entrer dans la compétition et enregistrer votre progression."
+    },
+    "privacy": {
+      "title": "Politique de confidentialité",
+      "description": "Votre vie privée est essentielle. Découvrez comment vos données sont traitées sur ft_transcendence.",
+      "section1Title": "Collecte minimale des données",
+      "section1Text": "Dans le cadre strict du projet pédagogique 42, seules les données indispensables au fonctionnement du jeu sont enregistrées : pseudonyme, avatar et statistiques de match.",
+      "section2Title": "Stockage local et cookies",
+      "section2Text": "Nous n'utilisons aucun traceur publicitaire tiers. Le stockage local (localStorage) est uniquement utilisé pour mémoriser votre langue préférée et votre session de jeu.",
+      "section3Title": "Droits et suppression",
+      "section3Text": "Vous disposez d'un droit total d'accès et de suppression de vos données sur simple demande ou réinitialisation de compte."
+    },
+    "terms": {
+      "title": "Conditions d'utilisation",
+      "description": "Règles d'utilisation et charte de bonne conduite sur la plateforme ft_transcendence.",
+      "section1Title": "Fair-play et respect",
+      "section1Text": "Tout comportement toxique, triche, tentative d'exploitation de failles ou déconnexion volontaire répétée en match est proscrit.",
+      "section2Title": "Cadre du projet et disponibilité",
+      "section2Text": "Cette application est développée comme projet d'école. Les fonctionnalités sont fournies en l'état sans garantie de disponibilité ininterrompue."
+    },
+    "notFound": {
+      "title": "404 - Balle hors limites",
+      "description": "La page que vous recherchez n'existe pas ou a été déplacée en dehors du terrain.",
+      "backHome": "Retourner au menu principal"
+    }
+  }
+}
