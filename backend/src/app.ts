@@ -3,6 +3,7 @@ import cors from 'cors';
 import path from 'path';
 import { authRouter } from './routes/auth.routes.js';
 import { usersRouter } from './routes/users.routes.js';
+import { friendsRouter } from './routes/friends.routes.js';
 
 export const createApp = (): Application => {
   const app = express();
@@ -35,6 +36,9 @@ export const createApp = (): Application => {
 
   // User profile & avatar management routes (/api/users/me, /api/users/:id)
   app.use('/api/users', usersRouter);
+
+  // Friendship management routes (/api/friends, /api/friends/request, etc.)
+  app.use('/api/friends', friendsRouter);
 
   return app;
 };
