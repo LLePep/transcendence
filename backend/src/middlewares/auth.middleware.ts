@@ -19,14 +19,14 @@ export function authenticateToken(
 ) {
   const authHeader = req.headers.authorization;
 
-  // 1. Check if the Authorization header is present
+  //  Check if the Authorization header is present
   if (!authHeader) {
     return res.status(401).json({
       error: 'Access denied. No authentication token provided.'
     });
   }
 
-  // 2. Format should be: "Bearer <token>"
+  //  Format should be: "Bearer <token>"
   const parts = authHeader.split(' ');
   if (parts.length !== 2 || parts[0] !== 'Bearer') {
     return res.status(401).json({
@@ -36,7 +36,7 @@ export function authenticateToken(
 
   const token = parts[1];
 
-  // 3. Verify the token signature and expiration
+  //  Verify the token signature and expiration
   const decoded = verifyToken(token);
   if (!decoded) {
     return res.status(401).json({
@@ -44,9 +44,9 @@ export function authenticateToken(
     });
   }
 
-  // 4. Attach decoded player data to the request object
+  // Attach decoded player data to the request object
   req.user = decoded;
 
-  // 5. Let the request proceed to the next handler
+  //  Let the request proceed to the next handler
   next();
 }
