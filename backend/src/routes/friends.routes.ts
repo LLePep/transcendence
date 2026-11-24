@@ -155,7 +155,7 @@ friendsRouter.post('/request', authenticateToken, async (req: AuthenticatedReque
     const currentUserId = req.user!.userId;
     const { targetUsername } = parseResult.data;
 
-    // 1. Find target player by username
+    //  Find target player by username
     const targetUser = await prisma.user.findUnique({
       where: { username: targetUsername }
     });
@@ -164,12 +164,12 @@ friendsRouter.post('/request', authenticateToken, async (req: AuthenticatedReque
       return res.status(404).json({ error: 'Player not found.' });
     }
 
-    // 2. Prevent adding yourself
+    //  Prevent adding yourself
     if (targetUser.id === currentUserId) {
       return res.status(400).json({ error: 'You cannot send a friend request to yourself.' });
     }
 
-    // 3. Check for existing relationship in either direction
+    //  Check for existing relationship in either direction
     const existing = await prisma.friendship.findFirst({
       where: {
         OR: [
@@ -203,7 +203,7 @@ friendsRouter.post('/request', authenticateToken, async (req: AuthenticatedReque
       }
     }
 
-    // 4. Create new pending friendship
+    //  Create new pending friendship
     const newFriendship = await prisma.friendship.create({
       data: {
         requesterId: currentUserId,
