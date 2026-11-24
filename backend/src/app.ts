@@ -2,6 +2,7 @@ import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
 import path from 'path';
 import { authRouter } from './routes/auth.routes.js';
+import { usersRouter } from './routes/users.routes.js';
 
 export const createApp = (): Application => {
   const app = express();
@@ -31,6 +32,9 @@ export const createApp = (): Application => {
 
   // Authentication routes (/api/auth/register, /api/auth/login)
   app.use('/api/auth', authRouter);
+
+  // User profile & avatar management routes (/api/users/me, /api/users/:id)
+  app.use('/api/users', usersRouter);
 
   return app;
 };
