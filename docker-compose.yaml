@@ -26,8 +26,8 @@ services:
     depends_on:
       - backend
     ports:
-      - "80:80"
-      - "443:443"
+      - "1025:80"
+      - "1026:443"
     networks:
       - app
     restart: always

@@ -18,7 +18,7 @@ if [ ! -s "$PGDATA/PG_VERSION" ]; then
         --auth-host=scram-sha-256
 
     # Accepter les connexions du réseau Docker (avec mot de passe)
-    echo "listen_addresses = samenet" >> "$PGDATA/postgresql.conf"
+    echo "listen_addresses = '*'" >> "$PGDATA/postgresql.conf"
     echo "host all all all scram-sha-256" >> "$PGDATA/pg_hba.conf"
 
     # Serveur temporaire, uniquement en socket local, pour créer user + db
