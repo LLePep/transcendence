@@ -1,0 +1,6 @@
+# dépendances npm
+node_modules
+# secrets
+.env
+# build result
+dist
