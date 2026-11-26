@@ -1,6 +1,30 @@
-# dépendances npm
-node_modules
-# secrets
+# Dependencies
+node_modules/
+
+# Secrets
 .env
-# build result
-dist
+.env.local
+.env.*.local
+
+# Build output
+dist/
+build/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Locally generated SSL certificates
+*.crt
+*.key
+*.pem
+
+# User-uploaded avatars (keep only the default avatar)
+backend/uploads/*
+!backend/uploads/default-avatar.svg
+
+# OS & IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
