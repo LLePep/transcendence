@@ -1,0 +1,41 @@
+name: game
+services:
+  db:
+    build: ./db
+    container_name: db
+    env_file: .env
+    volumes:
+      - db_data:/var/lib/postgresql/data   # = PGDATA dans db/Dockerfile
+    networks:
+      - app
+    restart: always
+
+  backend:                                 # nom imposé : nginx.conf pointe sur backend:3000
+    build: ./backend
+    container_name: backend
+    depends_on:
+      db:
+        condition: service_healthy         # attend le HEALTHCHECK (pg_isready) de la DB
+    networks:
+      - app
+    restart: always
+
+  rev-proxy:
+    build: ./rev-proxy
+    container_name: rev-proxy
+    depends_on:
+      - backend
+    ports:
+      - "1025:80"
+      - "1026:443"
+    networks:
+      - app
+    restart: always
+
+# Volume nommé : géré par Docker (voir "docker volume inspect game_db_data"), a voir plus tard
+volumes:
+  db_data:
+
+# Réseau bridge commun : les services se joignent par leur nom (db, backend…) comme un DNS
+networks:
+  app:
