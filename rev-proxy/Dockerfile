@@ -21,7 +21,7 @@ RUN apt-get update \
 
 # Remplace la config par défaut
 RUN rm /etc/nginx/conf.d/default.conf
-COPY nginx.conf /etc/nginx/conf.d/transcendence.conf
+COPY rev-proxy/nginx.conf /etc/nginx/conf.d/transcendence.conf
 
 # Fichiers statiques du front
 COPY --from=front-build /app/dist /usr/share/nginx/html

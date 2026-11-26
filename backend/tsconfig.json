@@ -1,19 +1,15 @@
 {
   "compilerOptions": {
-    // Node 24 comprend l'ES2024 : pas besoin de convertir vers du vieux JS
     "target": "ES2024",
-    // Modules ES de Node ("type": "module") : les imports relatifs finissent par .js
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
-    // Types de Node (process, Buffer…) ; pas de DOM, on n'est pas dans un navigateur
     "types": ["node"],
-
-    // src/server.ts → dist/server.js
     "rootDir": "src",
     "outDir": "dist",
-
     "strict": true,
+    "esModuleInterop": true,
     "skipLibCheck": true,
+    "resolveJsonModule": true,
     "sourceMap": true
   },
   "include": ["src"]
