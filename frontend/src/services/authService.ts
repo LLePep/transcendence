@@ -42,10 +42,16 @@ export const authService = {
   },
 
   /**
-   * Clear JWT session from local storage.
+   * Clear JWT session from local storage and notify backend.
    */
-  logout(): void {
-    removeStoredToken();
+  async logout(): Promise<void> {
+    try {
+      await apiClient('/api/auth/logout', { method: 'POST' });
+    } catch {
+      // Ignore errors if offline/network fails during logout
+    } finally {
+      removeStoredToken();
+    }
   },
 
   /**

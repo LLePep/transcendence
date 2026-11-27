@@ -3,6 +3,7 @@ import type { FC } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Trophy, Users, Swords, Crown, Medal, ArrowUpRight } from 'lucide-react';
+import { useAuth } from '../../context/AuthContext';
 import { getLeaderboardPreview } from '../../services/leaderboardService';
 import { getOnlinePlayersPreview } from '../../services/socialService';
 import type { LeaderboardEntry } from '../../types/leaderboard';
@@ -10,25 +11,27 @@ import type { OnlinePlayer, PlayerStatus } from '../../types/social';
 
 export const SocialPreviewSection: FC = () => {
   const { t } = useTranslation();
+  const { isAuthenticated } = useAuth();
   const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
   const [players, setPlayers] = useState<OnlinePlayer[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     let isMounted = true;
-    Promise.all([getLeaderboardPreview(), getOnlinePlayersPreview()]).then(
-      ([leaderboardData, playersData]) => {
-        if (isMounted) {
-          setLeaderboard(leaderboardData);
-          setPlayers(playersData);
-          setIsLoading(false);
-        }
+    Promise.all([
+      getLeaderboardPreview(),
+      isAuthenticated ? getOnlinePlayersPreview() : Promise.resolve([]),
+    ]).then(([leaderboardData, playersData]) => {
+      if (isMounted) {
+        setLeaderboard(leaderboardData);
+        setPlayers(playersData);
+        setIsLoading(false);
       }
-    );
+    });
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [isAuthenticated]);
 
   const getRankBadge = (rank: number) => {
     switch (rank) {
@@ -118,6 +121,10 @@ export const SocialPreviewSection: FC = () => {
               <div className="py-8 text-center text-slate-500 text-sm">
                 {t('common.loading')}
               </div>
+            ) : leaderboard.length === 0 ? (
+              <div className="py-8 text-center text-slate-500 text-sm">
+                {t('home.social.emptyLeaderboard')}
+              </div>
             ) : (
               <ul className="space-y-3">
                 {leaderboard.slice(0, 4).map((entry) => (
@@ -198,6 +205,20 @@ export const SocialPreviewSection: FC = () => {
             {isLoading ? (
               <div className="py-8 text-center text-slate-500 text-sm">
                 {t('common.loading')}
+              </div>
+            ) : !isAuthenticated ? (
+              <div className="py-8 text-center text-slate-400 text-sm flex flex-col items-center justify-center gap-3">
+                <p>{t('home.social.notLoggedInFriends')}</p>
+                <Link
+                  to="/login"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 text-cyan-400 text-xs font-semibold transition-colors"
+                >
+                  {t('auth.login.title')}
+                </Link>
+              </div>
+            ) : players.length === 0 ? (
+              <div className="py-8 text-center text-slate-500 text-sm">
+                {t('home.social.emptyFriends')}
               </div>
             ) : (
               <ul className="space-y-3">

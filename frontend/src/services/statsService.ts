@@ -1,10 +1,28 @@
 import type { PlatformStats } from '../types/stats';
-import { MOCK_PLATFORM_STATS } from '../mocks/statsMock';
+import { apiClient } from './apiClient';
 
 /**
- * Service providing global platform statistics without external network calls.
+ * Service providing real platform statistics directly from backend.
  */
 export async function getPlatformStats(): Promise<PlatformStats> {
-  // Simulates an async service call using typed mock data
-  return Promise.resolve({ ...MOCK_PLATFORM_STATS });
+  const startTime = performance.now();
+  try {
+    const data = await apiClient<PlatformStats>('/api/stats', {
+      method: 'GET',
+      requiresAuth: false,
+    });
+    const roundTripLatency = Math.round(performance.now() - startTime);
+    return {
+      activePlayersCount: data.activePlayersCount ?? 0,
+      matchesPlayedTotal: data.matchesPlayedTotal ?? 0,
+      serverLatencyMs: roundTripLatency,
+    };
+  } catch (error) {
+    console.error('[StatsService] Failed to fetch stats:', error);
+    return {
+      activePlayersCount: 0,
+      matchesPlayedTotal: 0,
+      serverLatencyMs: 0,
+    };
+  }
 }

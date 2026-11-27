@@ -1,10 +1,24 @@
 import type { LeaderboardEntry } from '../types/leaderboard';
-import { MOCK_LEADERBOARD } from '../mocks/leaderboardMock';
+import { apiClient } from './apiClient';
 
 /**
- * Service providing leaderboard preview data without external network calls.
+ * Service providing leaderboard data directly from backend Prisma ORM.
+ * Strictly limited to the top 100 players.
  */
+export async function getLeaderboard(limit = 100): Promise<LeaderboardEntry[]> {
+  const safeLimit = Math.min(Math.max(limit, 1), 100);
+  try {
+    const data = await apiClient<LeaderboardEntry[]>(`/api/users/leaderboard?limit=${safeLimit}`, {
+      method: 'GET',
+      requiresAuth: false,
+    });
+    return data.slice(0, 100);
+  } catch (error) {
+    console.error('[LeaderboardService] Failed to fetch leaderboard:', error);
+    return [];
+  }
+}
+
 export async function getLeaderboardPreview(): Promise<LeaderboardEntry[]> {
-  // Simulates an async service call using typed mock data
-  return Promise.resolve([...MOCK_LEADERBOARD]);
+  return getLeaderboard(4);
 }
