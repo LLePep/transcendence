@@ -1,6 +1,7 @@
 import express, { Application, Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import path from 'path';
+import { prisma } from './db.js';
 import { authRouter } from './routes/auth.routes.js';
 import { usersRouter } from './routes/users.routes.js';
 import { friendsRouter } from './routes/friends.routes.js';
@@ -30,6 +31,29 @@ export const createApp = (): Application => {
       service: 'transcendence-backend',
       timestamp: new Date().toISOString()
     });
+  });
+
+  // Platform statistics endpoint (players count, ongoing matches, server latency)
+  app.get('/api/stats', async (_req: Request, res: Response) => {
+    try {
+      const startTime = Date.now();
+      const totalPlayers = await prisma.user.count();
+      const inGameUsers = await prisma.user.count({
+        where: { status: 'IN_GAME' }
+      });
+      const ongoingMatches = Math.floor(inGameUsers / 2);
+      const dbLatencyMs = Date.now() - startTime;
+
+      res.json({
+        activePlayersCount: totalPlayers,
+        matchesPlayedTotal: ongoingMatches,
+        serverLatencyMs: Math.max(dbLatencyMs, 1),
+        timestamp: new Date().toISOString()
+      });
+    } catch (error) {
+      console.error('[Stats Error]', error);
+      res.status(500).json({ error: 'Failed to retrieve stats.' });
+    }
   });
 
   // Authentication routes (/api/auth/register, /api/auth/login)

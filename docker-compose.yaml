@@ -26,7 +26,9 @@ services:
     restart: always
 
   rev-proxy:
-    build: ./rev-proxy
+    build:
+      context: .
+      dockerfile: rev-proxy/Dockerfile
     container_name: rev-proxy
     depends_on:
       - backend

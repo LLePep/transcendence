@@ -1,0 +1,220 @@
+{
+  "common": {
+    "playNow": "Jouer maintenant",
+    "loading": "Chargement...",
+    "error": "Une erreur est survenue",
+    "retry": "Réessayer",
+    "back": "Retour",
+    "close": "Fermer",
+    "viewAll": "Tout afficher",
+    "online": "En ligne",
+    "inGame": "En jeu",
+    "offline": "Hors ligne",
+    "elo": "ELO",
+    "rank": "Rang",
+    "points": "PTS",
+    "wins": "Victoires",
+    "losses": "Défaites",
+    "winRate": "Taux de victoire",
+    "status": "Statut",
+    "placeholderBadge": "Module en cours de développement",
+    "backHome": "Retour à l'accueil",
+    "vs": "VS",
+    "milliseconds": "ms"
+  },
+  "nav": {
+    "brand": "TRANSCENDENCE",
+    "brandSub": "Battle Royale Arena",
+    "home": "Accueil",
+    "play": "Jouer",
+    "leaderboard": "Classement",
+    "chat": "Chat",
+    "profile": "Profil",
+    "login": "Connexion",
+    "register": "Inscription",
+    "toggleMenu": "Menu de navigation",
+    "languageSelector": "Choisir la langue"
+  },
+  "home": {
+    "hero": {
+      "badge": "Saison 1 — Tournois en direct",
+      "titlePrefix": "BATTLE ROYALE D'ARÈNE",
+      "titleHighlight": "WARCALL ARENA",
+      "titleSuffix": "EN TEMPS RÉEL",
+      "slogan": "Affrontez des champions en arène, lancez des sorts dévastateurs et survivez jusqu'au dernier dans ce battle royale multijoueur vu du dessus !",
+      "playButton": "Lancer une partie",
+      "leaderboardButton": "Voir le classement",
+      "statsActivePlayers": "Nombre de joueurs",
+      "statsMatchesPlayed": "Parties en cours",
+      "statsServerLatency": "Latence serveur"
+    },
+    "gameModes": {
+      "sectionTitle": "Modes de jeu",
+      "sectionSubtitle": "Choisissez votre arène et préparez-vous au duel",
+      "online": {
+        "badge": "Arène Royale",
+        "title": "Multijoueur en ligne",
+        "description": "Entrez dans l'arène, combattez des adversaires en temps réel avec vos sorts et devenez le dernier survivant.",
+        "action": "Entrer dans l'arène"
+      },
+      "ai": {
+        "badge": "Entraînement Solo",
+        "title": "Contre les Bots",
+        "description": "Perfectionnez vos esquives et la visée de vos sorts face à des combattants IA adaptatifs.",
+        "action": "Défier l'IA"
+      },
+      "join": {
+        "badge": "Salon Privé",
+        "title": "Arène Personnalisée",
+        "description": "Créez ou rejoignez une arène privée avec un code unique pour défier vos amis dans un combat à mort.",
+        "action": "Entrer le code"
+      }
+    },
+    "social": {
+      "leaderboardTitle": "Top Joueurs",
+      "leaderboardSubtitle": "Les meilleurs joueurs au classement général",
+      "viewFullLeaderboard": "Classement complet",
+      "onlineFriendsTitle": "Amis en ligne",
+      "onlineFriendsSubtitle": "Vos amis actuellement connectés",
+      "challengeFriend": "Défier",
+      "emptyFriends": "Aucun ami en ligne pour le moment.",
+      "notLoggedInFriends": "Connectez-vous pour voir vos amis en ligne.",
+      "emptyLeaderboard": "Aucun joueur classé pour le moment."
+    }
+  },
+  "footer": {
+    "description": "Plateforme web de jeu Battle Royale multijoueur en temps réel avec sorts et vue du dessus, inspirée de Warcall.io pour le cursus 42.",
+    "legalSection": "Informations légales",
+    "legalLink": "Mentions Légales",
+    "privacy": "Confidentialité & RGPD",
+    "terms": "Règles & CGU",
+    "github": "Code source",
+    "githubLink": "GitHub",
+    "projectBadge": "Projet 42",
+    "allRightsReserved": "Tous droits réservés.",
+    "builtWith": "Développé avec React, TypeScript et Tailwind CSS.",
+    "systemStatus": "Tous les systèmes sont opérationnels"
+  },
+  "legal": {
+    "title": "Mentions Légales",
+    "subtitle": "Informations légales, politique de confidentialité et conditions d'utilisation",
+    "tabLegal": "Mentions Légales",
+    "tabPrivacy": "Confidentialité & RGPD",
+    "tabTerms": "Règles du Jeu & CGU",
+    "editorTitle": "Édition du site & Projet 42",
+    "editorText": "Ce projet a été réalisé par des étudiants de l'école 42 dans le cadre du cursus ft_transcendence. Il s'agit d'une plateforme de jeu multijoueur d'arène en ligne à visée strictement pédagogique et non lucrative.",
+    "hostingTitle": "Hébergement & Déploiement Local",
+    "hostingText": "L'application est conteneurisée avec Docker et orchestrée via Docker Compose sous Linux. Le trafic web transite par un reverse-proxy Nginx sécurisé en TLS/SSL.",
+    "ipTitle": "Propriété intellectuelle & Logiciel libre",
+    "ipText": "Le code source du projet est libre et ouvert. L'ensemble des bibliothèques logicielles (React, Vite, Express, Prisma, Tailwind CSS, Lucide) et ressources graphiques sont utilisées sous licences open-source et libres de droits.",
+    "rgpdTitle": "Protection des Données Personnelles (RGPD)",
+    "rgpdText": "Conformément aux principes de minimisation des données du RGPD, seules les informations indispensables au compte joueur sont traitées : pseudonyme, adresse email, mot de passe hashé (bcrypt), image d'avatar et historique des parties/statistiques de match.",
+    "cookiesTitle": "Absence de traceurs & Cookies tiers",
+    "cookiesText": "Ce site ne contient aucun traceur publicitaire, aucun outil d'analyse externe et ne partage aucune donnée avec des tiers. Le stockage local (localStorage) de votre navigateur est exclusivement réservé au maintien de votre session chiffrée (JWT) et à vos préférences de langue.",
+    "rightsTitle": "Droits d'accès, de rectification et de suppression",
+    "rightsText": "Chaque joueur conserve un contrôle absolu sur son profil et ses données personnelles. Vous pouvez modifier votre pseudonyme, votre bio, votre avatar et supprimer vos données directement depuis votre espace profil joueur.",
+    "cguTitle": "Fair-play & Esprit sportif dans l'Arène",
+    "cguText": "En rejoignant les combats de Battle Royale, vous vous engagez à respecter vos adversaires : aucune triche (aimbot, speedhack, injection de paquets), aucun abus de bug volontaire et aucune attitude anti-jeu ne sont tolérés.",
+    "liabilityTitle": "Limitation de responsabilité",
+    "liabilityText": "Cette plateforme est fournie en l'état à des fins d'évaluation scolaire. Bien que nous nous efforcions d'assurer une stabilité optimale, aucune garantie de service continu ou sans interruption n'est assurée."
+  },
+  "languages": {
+    "fr": "Français",
+    "en": "Anglais",
+    "ar": "Arabe"
+  },
+  "placeholders": {
+    "play": {
+      "title": "Arène de Combat",
+      "description": "L'arène Battle Royale est en cours d'initialisation. Préparez vos sorts et affrontez vos adversaires au combat vu du dessus !"
+    },
+    "leaderboard": {
+      "title": "Top 100 — Classement Général",
+      "description": "Les 100 meilleurs joueurs du jeu classés selon leur score ELO et leurs performances."
+    },
+    "chat": {
+      "title": "Messagerie & Canaux",
+      "description": "Échangez en direct avec vos adversaires, rejoignez des canaux publics ou créez des discussions privées."
+    },
+    "profile": {
+      "title": "Profil Joueur",
+      "description": "Consultez votre historique de matchs, personnalisez votre avatar et suivez votre ratio victoires/défaites."
+    },
+    "login": {
+      "title": "Connexion au compte",
+      "description": "Accédez à votre espace joueur pour retrouver vos statistiques, vos amis et participer aux tournois."
+    },
+    "register": {
+      "title": "Création de compte",
+      "description": "Inscrivez-vous dès maintenant pour entrer dans la compétition et enregistrer votre progression."
+    },
+    "privacy": {
+      "title": "Politique de confidentialité",
+      "description": "Votre vie privée est essentielle. Découvrez comment vos données sont traitées sur ft_transcendence.",
+      "section1Title": "Collecte minimale des données",
+      "section1Text": "Dans le cadre strict du projet pédagogique 42, seules les données indispensables au fonctionnement du jeu sont enregistrées : pseudonyme, avatar et statistiques de match.",
+      "section2Title": "Stockage local et cookies",
+      "section2Text": "Nous n'utilisons aucun traceur publicitaire tiers. Le stockage local (localStorage) est uniquement utilisé pour mémoriser votre langue préférée et votre session de jeu.",
+      "section3Title": "Droits et suppression",
+      "section3Text": "Vous disposez d'un droit total d'accès et de suppression de vos données sur simple demande ou réinitialisation de compte."
+    },
+    "terms": {
+      "title": "Conditions d'utilisation",
+      "description": "Règles d'utilisation et charte de bonne conduite sur la plateforme ft_transcendence.",
+      "section1Title": "Fair-play et respect",
+      "section1Text": "Tout comportement toxique, triche, tentative d'exploitation de failles ou déconnexion volontaire répétée en match est proscrit.",
+      "section2Title": "Cadre du projet et disponibilité",
+      "section2Text": "Cette application est développée comme projet d'école. Les fonctionnalités sont fournies en l'état sans garantie de disponibilité ininterrompue."
+    },
+    "notFound": {
+      "title": "404 - Hors de l'arène",
+      "description": "La page que vous recherchez n'existe pas ou a été projetée hors de la zone de combat.",
+      "backHome": "Retourner au menu principal"
+    }
+  },
+  "auth": {
+    "login": "Connexion",
+    "register": "Inscription",
+    "logout": "Déconnexion",
+    "identifier": "Identifiant (Email ou Pseudo)",
+    "identifierPlaceholder": "Entrez votre email ou votre nom d'utilisateur",
+    "username": "Nom d'utilisateur",
+    "usernamePlaceholder": "3 à 20 caractères (alphanumérique, tirets, underscores)",
+    "email": "Adresse Email",
+    "emailPlaceholder": "joueur@transcendence.fr",
+    "password": "Mot de passe",
+    "passwordPlaceholder": "Au moins 6 caractères",
+    "submitLogin": "Se connecter",
+    "submitRegister": "Créer mon compte",
+    "submitting": "Chargement...",
+    "alreadyHaveAccount": "Vous avez déjà un compte ?",
+    "noAccountYet": "Pas encore de compte ?",
+    "goToRegister": "Créer un compte",
+    "goToLogin": "Se connecter",
+    "loginSuccess": "Connexion réussie !",
+    "registerSuccess": "Compte créé avec succès !",
+    "notConnected": "Vous n'êtes pas connecté",
+    "connectToAccessProfile": "Veuillez vous connecter pour voir votre profil et vos statistiques."
+  },
+  "profile": {
+    "myProfile": "Mon Profil",
+    "careerStats": "Statistiques de Carrière",
+    "editBio": "Modifier la bio",
+    "saveBio": "Enregistrer",
+    "cancel": "Annuler",
+    "bioPlaceholder": "Écrivez quelques mots sur vous...",
+    "changeAvatar": "Changer l'avatar",
+    "rating": "Score ELO",
+    "level": "Niveau",
+    "xp": "Points d'XP",
+    "gamesPlayed": "Parties Jouées",
+    "wins": "Victoires",
+    "losses": "Défaites",
+    "draws": "Nuls",
+    "winRate": "Taux de Victoire",
+    "kdRatio": "Ratio K/D",
+    "highestScore": "Meilleur Score",
+    "kills": "Kills",
+    "deaths": "Morts"
+  }
+}

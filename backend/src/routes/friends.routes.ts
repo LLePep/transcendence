@@ -78,6 +78,89 @@ friendsRouter.get('/', authenticateToken, async (req: AuthenticatedRequest, res:
 });
 
 /**
+ * Route: GET /api/friends/online
+ * Description: Get only online accepted friends for the authenticated player using Prisma ORM
+ */
+friendsRouter.get('/online', authenticateToken, async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+  try {
+    const currentUserId = req.user!.userId;
+
+    const friendships = await prisma.friendship.findMany({
+      where: {
+        status: 'ACCEPTED',
+        OR: [
+          {
+            requesterId: currentUserId,
+            addressee: {
+              status: { not: 'OFFLINE' }
+            }
+          },
+          {
+            addresseeId: currentUserId,
+            requester: {
+              status: { not: 'OFFLINE' }
+            }
+          }
+        ]
+      },
+      include: {
+        requester: {
+          select: {
+            id: true,
+            username: true,
+            avatarUrl: true,
+            status: true,
+            stats: {
+              select: {
+                rating: true,
+                wins: true
+              }
+            }
+          }
+        },
+        addressee: {
+          select: {
+            id: true,
+            username: true,
+            avatarUrl: true,
+            status: true,
+            stats: {
+              select: {
+                rating: true,
+                wins: true
+              }
+            }
+          }
+        }
+      }
+    });
+
+    const onlineFriends = friendships.map((f) => {
+      const friendData = f.requesterId === currentUserId ? f.addressee : f.requester;
+      const statusMap: Record<string, 'online' | 'in_game' | 'offline'> = {
+        ONLINE: 'online',
+        IN_GAME: 'in_game',
+        IN_LOBBY: 'online',
+        OFFLINE: 'offline'
+      };
+      return {
+        id: friendData.id,
+        username: friendData.username,
+        avatarUrl: friendData.avatarUrl,
+        status: statusMap[friendData.status] || 'online',
+        currentActivity: friendData.status === 'IN_GAME' ? 'En partie' : 'En ligne',
+        elo: friendData.stats?.rating ?? 1000
+      };
+    });
+
+    res.status(200).json(onlineFriends);
+  } catch (error) {
+    console.error('[Friends Error] GET /online:', error);
+    res.status(500).json({ error: 'An internal server error occurred.' });
+  }
+});
+
+/**
  * Route: GET /api/friends/requests
  * Description: List pending incoming and outgoing friend requests
  */

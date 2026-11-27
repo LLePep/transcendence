@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { prisma } from '../db.js';
 import { hashPassword, comparePassword } from '../utils/password.js';
 import { generateToken } from '../utils/jwt.js';
+import { authenticateToken, AuthenticatedRequest } from '../middlewares/auth.middleware.js';
 
 export const authRouter = Router();
 
@@ -65,6 +66,7 @@ authRouter.post('/register', async (req: Request, res: Response): Promise<void> 
         username,
         email: email.toLowerCase(),
         passwordHash,
+        status: 'ONLINE',
         stats: {
           create: {
             gamesPlayed: 0,
@@ -148,6 +150,12 @@ authRouter.post('/login', async (req: Request, res: Response): Promise<void> => 
       return;
     }
 
+    // Update user status to ONLINE via Prisma ORM
+    const updatedUser = await prisma.user.update({
+      where: { id: user.id },
+      data: { status: 'ONLINE' }
+    });
+
     // E. Generate JWT session token
     const token = generateToken({
       userId: user.id,
@@ -157,17 +165,36 @@ authRouter.post('/login', async (req: Request, res: Response): Promise<void> => 
     res.status(200).json({
       message: 'Login successful!',
       user: {
-        id: user.id,
-        username: user.username,
-        email: user.email,
-        avatarUrl: user.avatarUrl,
-        bio: user.bio,
-        status: user.status
+        id: updatedUser.id,
+        username: updatedUser.username,
+        email: updatedUser.email,
+        avatarUrl: updatedUser.avatarUrl,
+        bio: updatedUser.bio,
+        status: updatedUser.status
       },
       token
     });
   } catch (error) {
     console.error('[Auth Error] /login:', error);
+    res.status(500).json({ error: 'An internal server error occurred.' });
+  }
+});
+
+/**
+ * Route: POST /api/auth/logout
+ * Description: Log out current player and set status to OFFLINE
+ */
+authRouter.post('/logout', authenticateToken, async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+  try {
+    if (req.user?.userId) {
+      await prisma.user.update({
+        where: { id: req.user.userId },
+        data: { status: 'OFFLINE' }
+      });
+    }
+    res.status(200).json({ message: 'Logged out successfully.' });
+  } catch (error) {
+    console.error('[Auth Error] /logout:', error);
     res.status(500).json({ error: 'An internal server error occurred.' });
   }
 });
