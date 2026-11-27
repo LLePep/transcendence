@@ -26,6 +26,10 @@ export const Login: FC = () => {
     }
   }, [isAuthenticated, navigate]);
 
+  if (isAuthenticated) {
+    return null;
+  }
+
   // Handle Google OAuth callback parameters
   useEffect(() => {
     const googleToken = searchParams.get('googleToken');

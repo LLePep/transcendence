@@ -24,6 +24,10 @@ export const Register: FC = () => {
     }
   }, [isAuthenticated, navigate]);
 
+  if (isAuthenticated) {
+    return null;
+  }
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setError(null);
