@@ -1,4 +1,4 @@
-import { Router, Response } from 'express';
+import { Router, Request, Response } from 'express';
 import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
@@ -182,6 +182,63 @@ usersRouter.post(
     }
   }
 );
+
+/**
+ * Route: GET /api/users/leaderboard
+ * Description: Get top players ranked by rating (ELO) using Prisma ORM
+ */
+usersRouter.get('/leaderboard', async (req: Request, res: Response): Promise<void> => {
+  try {
+    const requestedLimit = Number(req.query.limit) || 100;
+    const limit = Math.min(Math.max(requestedLimit, 1), 100);
+
+    const users = await prisma.user.findMany({
+      select: {
+        id: true,
+        username: true,
+        avatarUrl: true,
+        status: true,
+        stats: {
+          select: {
+            rating: true,
+            wins: true,
+            losses: true,
+            gamesPlayed: true
+          }
+        }
+      },
+      orderBy: {
+        stats: {
+          rating: 'desc'
+        }
+      },
+      take: limit
+    });
+
+    const leaderboard = users.map((u, index) => {
+      const wins = u.stats?.wins ?? 0;
+      const losses = u.stats?.losses ?? 0;
+      const total = wins + losses;
+      const winRate = total > 0 ? Math.round((wins / total) * 100) : 0;
+      return {
+        id: u.id,
+        rank: index + 1,
+        username: u.username,
+        avatarUrl: u.avatarUrl,
+        elo: u.stats?.rating ?? 1000,
+        wins,
+        losses,
+        winRate,
+        isOnline: u.status === 'ONLINE' || u.status === 'IN_GAME' || u.status === 'IN_LOBBY'
+      };
+    });
+
+    res.status(200).json(leaderboard);
+  } catch (error) {
+    console.error('[Users Error] GET /leaderboard:', error);
+    res.status(500).json({ error: 'An internal server error occurred.' });
+  }
+});
 
 /**
  * Route: GET /api/users/:id
