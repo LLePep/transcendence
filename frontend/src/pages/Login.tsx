@@ -19,7 +19,7 @@ export const Login: FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isProcessingGoogle, setIsProcessingGoogle] = useState(false);
 
-  // If already authenticated, redirect to profile
+  // If already authenticated, redirect to profile inside useEffect to avoid console warning
   useEffect(() => {
     if (isAuthenticated) {
       navigate('/profile', { replace: true });

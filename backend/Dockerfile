@@ -8,7 +8,7 @@ RUN apt-get update \
 
 COPY package*.json ./
 COPY prisma ./prisma/
-RUN npm install
+RUN npm ci
 RUN npx prisma generate
 
 COPY . .
@@ -25,7 +25,7 @@ RUN apt-get update \
 
 COPY package*.json ./
 COPY prisma ./prisma/
-RUN npm install --omit=dev
+RUN npm ci --omit=dev
 
 COPY --from=build /app/node_modules/.prisma ./node_modules/.prisma
 COPY --from=build /app/dist ./dist

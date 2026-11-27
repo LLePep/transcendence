@@ -17,7 +17,7 @@ export const Register: FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // If already authenticated, redirect to profile
+  // If already authenticated, redirect to profile inside useEffect to avoid console warning
   useEffect(() => {
     if (isAuthenticated) {
       navigate('/profile', { replace: true });
