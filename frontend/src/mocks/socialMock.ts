@@ -14,7 +14,7 @@ export const MOCK_ONLINE_PLAYERS: OnlinePlayer[] = [
     username: 'QuantumBall',
     avatarUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&auto=format&fit=crop&q=80',
     status: 'in_game',
-    currentActivity: 'En match classé 1v1',
+    currentActivity: 'En combat d\'arène Battle Royale',
     elo: 1950,
   },
   {
@@ -27,7 +27,7 @@ export const MOCK_ONLINE_PLAYERS: OnlinePlayer[] = [
   },
   {
     id: 'f4',
-    username: 'GhostPaddle',
+    username: 'GhostMage',
     avatarUrl: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=120&auto=format&fit=crop&q=80',
     status: 'offline',
     elo: 1720,

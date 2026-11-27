@@ -7,8 +7,7 @@ import { Chat } from '../pages/Chat';
 import { Profile } from '../pages/Profile';
 import { Login } from '../pages/Login';
 import { Register } from '../pages/Register';
-import { Privacy } from '../pages/Privacy';
-import { Terms } from '../pages/Terms';
+import { Legal } from '../pages/Legal';
 import { NotFound } from '../pages/NotFound';
 
 export const router = createBrowserRouter([
@@ -45,12 +44,20 @@ export const router = createBrowserRouter([
         element: <Register />,
       },
       {
+        path: 'legal',
+        element: <Legal />,
+      },
+      {
+        path: 'mentions-legales',
+        element: <Legal />,
+      },
+      {
         path: 'privacy',
-        element: <Privacy />,
+        element: <Legal />,
       },
       {
         path: 'terms',
-        element: <Terms />,
+        element: <Legal />,
       },
       {
         path: '*',

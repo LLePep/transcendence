@@ -1,7 +1,7 @@
 import type { FC } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Gamepad2, ShieldCheck, FileText, Activity } from 'lucide-react';
+import { Gamepad2, ShieldCheck, FileText, Activity, Scale } from 'lucide-react';
 
 export const Footer: FC = () => {
   const { t } = useTranslation();
@@ -43,7 +43,16 @@ export const Footer: FC = () => {
             <ul className="space-y-2 text-sm">
               <li>
                 <Link
-                  to="/privacy"
+                  to="/legal"
+                  className="inline-flex items-center gap-2 text-cyan-400 hover:text-cyan-300 font-semibold transition-colors focus:outline-none focus-visible:underline"
+                >
+                  <Scale className="w-4 h-4" aria-hidden="true" />
+                  <span>{t('footer.legalLink')}</span>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/legal?tab=privacy"
                   className="inline-flex items-center gap-2 text-slate-400 hover:text-cyan-400 transition-colors focus:outline-none focus-visible:underline"
                 >
                   <ShieldCheck className="w-4 h-4" aria-hidden="true" />
@@ -52,7 +61,7 @@ export const Footer: FC = () => {
               </li>
               <li>
                 <Link
-                  to="/terms"
+                  to="/legal?tab=terms"
                   className="inline-flex items-center gap-2 text-slate-400 hover:text-cyan-400 transition-colors focus:outline-none focus-visible:underline"
                 >
                   <FileText className="w-4 h-4" aria-hidden="true" />
@@ -100,9 +109,18 @@ export const Footer: FC = () => {
           <p>
             © {currentYear} {t('nav.brand')}. {t('footer.allRightsReserved')}
           </p>
-          <p className="text-slate-400">
-            {t('nav.brandSub')} • {t('footer.projectBadge')}
-          </p>
+          <div className="flex items-center gap-3 text-slate-400">
+            <Link
+              to="/legal"
+              className="hover:text-cyan-400 transition-colors underline decoration-slate-700 underline-offset-4"
+            >
+              {t('footer.legalLink')}
+            </Link>
+            <span>•</span>
+            <span>{t('nav.brandSub')}</span>
+            <span>•</span>
+            <span>{t('footer.projectBadge')}</span>
+          </div>
         </div>
       </div>
     </footer>

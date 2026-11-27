@@ -15,7 +15,7 @@ export const MOCK_LEADERBOARD: LeaderboardEntry[] = [
   {
     id: 'p2',
     rank: 2,
-    username: 'CyberPaddle',
+    username: 'ArcaneBlade',
     avatarUrl: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=120&auto=format&fit=crop&q=80',
     elo: 2380,
     wins: 128,
@@ -48,7 +48,7 @@ export const MOCK_LEADERBOARD: LeaderboardEntry[] = [
   {
     id: 'p5',
     rank: 5,
-    username: 'PongTitan',
+    username: 'WarlordTitan',
     avatarUrl: 'https://images.unsplash.com/photo-1628157582853-a796fa650a6a?w=120&auto=format&fit=crop&q=80',
     elo: 2140,
     wins: 89,
