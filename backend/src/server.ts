@@ -1,32 +1,37 @@
-import express from "express";
-import { createServer } from "node:http";
-import { Server } from "socket.io";
-import { TICK_RATE, ARENA_WIDTH, ARENA_HEIGHT } from "./shared/constants.js";
-import { stepEntity, type EntityState, type MoveInputLike } from "./shared/movement.js";
+import { createServer } from 'node:http';
+import { Server } from 'socket.io';
+import dotenv from 'dotenv';
+import { createApp } from './app.js';
+import { prisma } from './db.js';
+import { TICK_RATE, ARENA_WIDTH, ARENA_HEIGHT } from './shared/constants.js';
+import { stepEntity, type EntityState, type MoveInputLike } from './shared/movement.js';
 
-const PORT = Number(process.env.PORT) || 3000;
+dotenv.config();
 
-// --- Express : les routes HTTP classiques (/api/...) ---
-const app = express();
-app.use(express.json());
+const PORT = Number(process.env.BACKEND_PORT || process.env.PORT) || 3000;
 
-app.get("/api/health", (_req, res) => {
-  res.json({ ok: true });
+// --- Express: REST API routes (/api/health, /api/auth, /api/users, /api/friends) ---
+const app = createApp();
+
+// Express and Socket.IO share the same HTTP server (port 3000)
+const httpServer = createServer(app);
+const io = new Server(httpServer, {
+  cors: {
+    origin: true,
+    credentials: true
+  },
+  path: '/socket.io/'
 });
 
-// Express et Socket.io partagent le même serveur HTTP (donc le même port)
-const httpServer = createServer(app);
-const io = new Server(httpServer);
-
-// --- État du jeu : uniquement sur le serveur (serveur autoritaire) ---
+// --- Authoritative Game State (kept from main game loop) ---
 interface Player extends EntityState {
-  input: MoveInputLike; // dernier input reçu, appliqué à chaque tick
+  input: MoveInputLike;
 }
 const playersById = new Map<string, Player>();
 let joinCount = 0;
 
-io.on("connection", (socket) => {
-  // Position de départ en spirale, pour que deux joueurs ne se superposent pas
+io.on('connection', (socket) => {
+  // Spawn position in spiral so players don't overlap
   const angle = joinCount++ * 2.399963;
   playersById.set(socket.id, {
     x: ARENA_WIDTH / 2 + Math.cos(angle) * 80,
@@ -35,29 +40,29 @@ io.on("connection", (socket) => {
     vy: 0,
     input: { moveX: 0, moveY: 0 },
   });
-  console.log(`${socket.id} connecté (${playersById.size} joueur(s))`);
+  console.log(`[Socket.IO] ${socket.id} connected (${playersById.size} player(s))`);
 
-  socket.on("input", (data: unknown) => {
+  socket.on('input', (data: unknown) => {
     const player = playersById.get(socket.id);
     if (player) player.input = sanitizeInput(data);
   });
 
-  socket.on("disconnect", (reason) => {
+  socket.on('disconnect', (reason) => {
     playersById.delete(socket.id);
-    console.log(`${socket.id} déconnecté (${reason})`);
+    console.log(`[Socket.IO] ${socket.id} disconnected (${reason})`);
   });
 });
 
-/** Ne jamais faire confiance au client : tout ce qui n'est pas -1/0/1 devient 0. */
+/** Never trust the client: anything other than -1/0/1 becomes 0. */
 function sanitizeInput(data: unknown): MoveInputLike {
-  const d = (typeof data === "object" && data !== null ? data : {}) as Record<string, unknown>;
+  const d = (typeof data === 'object' && data !== null ? data : {}) as Record<string, unknown>;
   return { moveX: toAxis(d.moveX), moveY: toAxis(d.moveY) };
 }
 function toAxis(value: unknown): -1 | 0 | 1 {
   return value === -1 || value === 1 ? value : 0;
 }
 
-// --- Boucle de jeu : TICK_RATE fois par seconde ---
+// --- Game Loop: TICK_RATE ticks per second ---
 const dt = 1 / TICK_RATE;
 setInterval(() => {
   const state: Record<string, { x: number; y: number }> = {};
@@ -65,17 +70,31 @@ setInterval(() => {
     stepEntity(player, player.input, dt);
     state[id] = { x: player.x, y: player.y };
   }
-  io.emit("state", state); // envoie le state à tous les clients connectés
+  io.emit('state', state);
 }, 1000 / TICK_RATE);
 
-httpServer.listen(PORT, () => {
-  console.log(`Serveur prêt sur le port ${PORT}`);
-});
+// --- Startup & Database Connection ---
+async function main() {
+  try {
+    await prisma.$connect();
+    console.log('[Database] Connected to PostgreSQL via Prisma ORM.');
 
-// Arrêt propre : "docker stop" envoie SIGTERM, Ctrl+C envoie SIGINT
-for (const signal of ["SIGTERM", "SIGINT"] as const) {
-  process.on(signal, () => {
-    console.log(`${signal} reçu, arrêt du serveur`);
+    httpServer.listen(PORT, '0.0.0.0', () => {
+      console.log(`[Server] Backend listening on port ${PORT}`);
+    });
+  } catch (error) {
+    console.error('[Server] Failed to start:', error);
+    process.exit(1);
+  }
+}
+
+main();
+
+// Graceful shutdown
+for (const signal of ['SIGTERM', 'SIGINT'] as const) {
+  process.on(signal, async () => {
+    console.log(`[Server] ${signal} received, shutting down gracefully...`);
+    await prisma.$disconnect();
     io.close(() => process.exit(0));
   });
 }
