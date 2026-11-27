@@ -26,13 +26,16 @@ const storage = multer.diskStorage({
   }
 });
 
-// Filter allowed image MIME types
+// Filter allowed raster image types (disallow SVG to prevent stored XSS)
 const fileFilter: multer.Options['fileFilter'] = (_req, file, cb) => {
-  const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/svg+xml'];
-  if (allowedMimeTypes.includes(file.mimetype)) {
+  const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+  const allowedExtensions = ['.jpg', '.jpeg', '.png', '.webp', '.gif'];
+  const ext = path.extname(file.originalname).toLowerCase();
+
+  if (allowedMimeTypes.includes(file.mimetype) && allowedExtensions.includes(ext)) {
     cb(null, true);
   } else {
-    cb(new Error('Invalid file format. Only JPEG, PNG, WEBP, GIF, and SVG images are allowed.'));
+    cb(new Error('Invalid file format. Only JPEG, PNG, WEBP, and GIF images are allowed.'));
   }
 };
 
