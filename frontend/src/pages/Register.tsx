@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import type { FC, FormEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserPlus, ArrowLeft, AlertCircle, Loader2 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { GoogleAuthButton } from '../components/common/GoogleAuthButton';
 
 export const Register: FC = () => {
   const { t } = useTranslation();
@@ -17,9 +18,11 @@ export const Register: FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // If already authenticated, redirect to profile
-  if (isAuthenticated) {
-    navigate('/profile', { replace: true });
-  }
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/profile', { replace: true });
+    }
+  }, [isAuthenticated, navigate]);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -83,6 +86,25 @@ export const Register: FC = () => {
             <span>{error}</span>
           </div>
         )}
+
+        {/* Google OAuth Register Button */}
+        <div className="mb-6">
+          <GoogleAuthButton
+            label={t('auth.registerWithGoogle')}
+            disabled={isSubmitting}
+          />
+
+          <div className="relative my-6">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-slate-800"></div>
+            </div>
+            <div className="relative flex justify-center text-xs uppercase">
+              <span className="bg-slate-900/95 px-3 text-slate-500 font-semibold tracking-wider">
+                {t('auth.orDivider')}
+              </span>
+            </div>
+          </div>
+        </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>

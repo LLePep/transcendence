@@ -32,15 +32,18 @@ enum MatchResult {
 
 // Core user account and profile
 model User {
-  id           String     @id @default(uuid())
-  email        String     @unique
-  username     String     @unique
-  passwordHash String
-  avatarUrl    String     @default("/uploads/default-avatar.svg")
-  bio          String?    @default("Ready to play!")
-  status       UserStatus @default(OFFLINE)
-  createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
+  id               String     @id @default(uuid())
+  email            String     @unique
+  username         String     @unique
+  passwordHash     String?
+  googleId         String?    @unique
+  twoFactorEnabled Boolean    @default(false)
+  twoFactorSecret  String?
+  avatarUrl        String     @default("/uploads/default-avatar.svg")
+  bio              String?    @default("Ready to play!")
+  status           UserStatus @default(OFFLINE)
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
 
   // Relations
   stats               UserStats?

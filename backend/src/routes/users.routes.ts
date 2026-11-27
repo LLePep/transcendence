@@ -78,6 +78,15 @@ usersRouter.get('/me', authenticateToken, async (req: AuthenticatedRequest, res:
       return;
     }
 
+    // Auto-update user status to ONLINE if they were marked OFFLINE
+    if (user.status === 'OFFLINE') {
+      await prisma.user.update({
+        where: { id: user.id },
+        data: { status: 'ONLINE' },
+      });
+      user.status = 'ONLINE';
+    }
+
     res.status(200).json(user);
   } catch (error) {
     console.error('[Users Error] GET /me:', error);

@@ -55,6 +55,28 @@ export const authService = {
   },
 
   /**
+   * Set or restore JWT token in storage.
+   */
+  setStoredToken(token: string): void {
+    setStoredToken(token);
+  },
+
+  /**
+   * Authenticate with Google credential token (ID token).
+   */
+  async loginWithGoogle(credential: string): Promise<AuthResponse> {
+    const data = await apiClient<AuthResponse>('/api/auth/google', {
+      method: 'POST',
+      body: JSON.stringify({ credential }),
+      requiresAuth: false,
+    });
+    if (data.token) {
+      setStoredToken(data.token);
+    }
+    return data;
+  },
+
+  /**
    * Get the current JWT token from storage.
    */
   getToken(): string | null {

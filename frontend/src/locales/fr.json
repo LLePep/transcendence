@@ -194,7 +194,13 @@
     "loginSuccess": "Connexion réussie !",
     "registerSuccess": "Compte créé avec succès !",
     "notConnected": "Vous n'êtes pas connecté",
-    "connectToAccessProfile": "Veuillez vous connecter pour voir votre profil et vos statistiques."
+    "connectToAccessProfile": "Veuillez vous connecter pour voir votre profil et vos statistiques.",
+    "orDivider": "OU",
+    "continueWithGoogle": "Continuer avec Google",
+    "registerWithGoogle": "S'inscrire avec Google",
+    "authenticatingGoogle": "Authentification Google en cours...",
+    "googleNotConfigured": "L'authentification Google n'est pas encore configurée sur le serveur (GOOGLE_CLIENT_ID manquant).",
+    "googleAuthFailed": "Échec de l'authentification Google."
   },
   "profile": {
     "myProfile": "Mon Profil",
